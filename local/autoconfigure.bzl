@@ -1,9 +1,10 @@
 def _autoconfigure_impl(repo_ctx):
     # TODO: Find a java binary
     # Create a new repository:
-    repo_ctx.file(
-        "BUILD.bazel",
-        content = """
+    if repo_ctx.attr.found:
+        repo_ctx.file(
+            "BUILD.bazel",
+            content = """
 load('@sample_java_rules//:toolchain.bzl', 'sample_java_toolchain')
 sample_java_toolchain(
     name = 'autoconfigure',
@@ -19,18 +20,26 @@ toolchain(
     target_compatible_with = HOST_CONSTRAINTS,
 )
 """,
-    )
-    pass
+        )
+    else:
+        # Don't write a toolchain since it wasn't found.
+        repo_ctx.file(
+            "BUILD.bazel",
+            content = "",
+        )
 
 _autoconfigure = repository_rule(
     implementation = _autoconfigure_impl,
+    attrs = {
+        "found": attr.bool(default = True),
+    },
     local = True,
     configure = True,
 )
 
-def autoconfigure(name):
+def autoconfigure(name, **args):
     # Create the actual repo.
-    _autoconfigure(name = name)
+    _autoconfigure(name = name, **args)
 
     # Register the toolchains.
     native.register_toolchains("@%s//:all" % name)

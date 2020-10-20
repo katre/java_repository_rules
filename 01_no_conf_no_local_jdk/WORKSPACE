@@ -12,6 +12,10 @@ local_repository(
 
 load("@local//:autoconfigure.bzl", "autoconfigure")
 
-autoconfigure(name = "local_sample_java")
+# Could be in WORKSPACE suffix via Bazel automatically loading it.
+autoconfigure(
+    name = "local_sample_java",
+    found = False,
+)
 
 # No further configuration.
