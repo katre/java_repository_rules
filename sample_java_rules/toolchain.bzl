@@ -9,5 +9,6 @@ sample_java_toolchain = rule(
     implementation = _sample_java_toolchain,
     attrs = {
         "id": attr.string(mandatory = True),
+        "deps": attr.label_list(),
     },
 )

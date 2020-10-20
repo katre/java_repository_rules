@@ -65,5 +65,19 @@ INFO: Analyzed target //:main (4 packages loaded, 8 targets configured).
 
 ## Use Case 4: Configure Specific Remote JDK
 
+The WORKSPACE includes `@local//:remote.bzl`, and configures several remote
+toolchains, using toolchain selection and platform definitions (from the BUILD
+file) to choose between them.
+
+```
+$ bazel build --platforms=//:linux //:main
+DEBUG: /usr/local/google/home/jcater/.cache/bazel/_bazel_jcater/96cc738804618b7fefc2f4f988b72363/external/sample_java_rules/rules.bzl:5:10: sample_java_binary: target //:main has toolchain remote-https-foo-linux.zip
+INFO: Analyzed target //:main (1 packages loaded, 32 targets configured).
+
+ bazel build --platforms=//:windows //:main
+DEBUG: /usr/local/google/home/jcater/.cache/bazel/_bazel_jcater/96cc738804618b7fefc2f4f988b72363/external/sample_java_rules/rules.bzl:5:10: sample_java_binary: target //:main has toolchain remote-https-foo-windows.zip
+INFO: Analyzed target //:main (0 packages loaded, 0 targets configured).
+```
+
 ## Use Case 5: Specify Java Language Version
 

@@ -1,0 +1,20 @@
+load("@sample_java_rules//:rules.bzl", "sample_java_binary")
+
+sample_java_binary(name = "main")
+
+# Target platforms to use.
+platform(
+    name = "linux",
+    constraint_values = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+)
+
+platform(
+    name = "windows",
+    constraint_values = [
+        "@platforms//os:windows",
+        "@platforms//cpu:x86_64",
+    ],
+)

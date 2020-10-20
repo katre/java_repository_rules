@@ -1,0 +1,48 @@
+workspace(name = "main")
+
+local_repository(
+    name = "sample_java_rules",
+    path = "../sample_java_rules",
+)
+
+local_repository(
+    name = "local",
+    path = "../local",
+)
+
+load("@local//:remote.bzl", "remote")
+
+# Added as project-specific configuration.
+remote(
+    name = "remote_sample_java_linux",
+    exec_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+    target_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+    url = "https://foo/linux.zip",
+)
+
+remote(
+    name = "remote_sample_java_windows",
+    exec_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+    target_compatible_with = [
+        "@platforms//os:windows",
+        "@platforms//cpu:x86_64",
+    ],
+    url = "https://foo/windows.zip",
+)
+
+# Even with this in the WORKSPACE suffix, the previously-configured toolchain would be used.
+load("@local//:autoconfigure.bzl", "autoconfigure")
+
+autoconfigure(
+    name = "local_sample_java",
+    found = True,
+)
