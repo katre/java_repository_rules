@@ -1,0 +1,21 @@
+workspace(name = "main")
+
+local_repository(
+    name = "sample_java_rules",
+    path = "../sample_java_rules",
+)
+
+local_repository(
+    name = "local",
+    path = "../local",
+)
+
+load("@local//:autoconfigure.bzl", "autoconfigure")
+
+# Could be in WORKSPACE suffix via Bazel automatically loading it.
+autoconfigure(
+    name = "local_sample_java",
+    found = True,
+)
+
+# No further configuration.
