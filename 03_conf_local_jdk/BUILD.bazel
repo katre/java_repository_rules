@@ -1,0 +1,3 @@
+load("@sample_java_rules//:rules.bzl", "sample_java_binary")
+
+sample_java_binary(name = "main")

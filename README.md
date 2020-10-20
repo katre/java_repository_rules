@@ -53,6 +53,16 @@ INFO: Analyzed target //:main (12 packages loaded, 27 targets configured).
 
 ## Use Case 3: Configure Specific Local JDK
 
+The WORKSPACE includes `@local//:configure.bzl`, and specifies a specific
+locally-installed path to use.
+
+```
+$ cd 03_conf_local_jdk
+$ bazel build //:main
+DEBUG: /usr/local/google/home/jcater/.cache/bazel/_bazel_jcater/4b9d21523b1b5b45752cd4159611cb5c/external/sample_java_rules/rules.bzl:5:10: sample_java_binary: target //:main has toolchain local-usr-bin-foo
+INFO: Analyzed target //:main (4 packages loaded, 8 targets configured).
+```
+
 ## Use Case 4: Configure Specific Remote JDK
 
 ## Use Case 5: Specify Java Language Version

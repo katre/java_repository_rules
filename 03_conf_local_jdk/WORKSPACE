@@ -1,0 +1,27 @@
+workspace(name = "main")
+
+local_repository(
+    name = "sample_java_rules",
+    path = "../sample_java_rules",
+)
+
+local_repository(
+    name = "local",
+    path = "../local",
+)
+
+load("@local//:configure.bzl", "configure")
+
+# Added as project-specific configuration: assumes all machines are set up the same.
+configure(
+    name = "local_sample_java",
+    path = "/usr/bin/foo",
+)
+
+# Even with this in the WORKSPACE suffix, the previously-configured toolchain would be used.
+load("@local//:autoconfigure.bzl", "autoconfigure")
+
+autoconfigure(
+    name = "local_sample_java",
+    found = True,
+)
