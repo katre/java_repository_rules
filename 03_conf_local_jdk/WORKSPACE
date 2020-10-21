@@ -6,20 +6,20 @@ local_repository(
 )
 
 local_repository(
-    name = "local",
-    path = "../local",
+    name = "sample_java_config",
+    path = "../sample_java_config",
 )
 
-load("@local//:configure.bzl", "configure")
+load("@sample_java_config//:local.bzl", "local")
 
 # Added as project-specific configuration: assumes all machines are set up the same.
-configure(
+local(
     name = "local_sample_java",
     path = "/usr/bin/foo",
 )
 
 # Even with this in the WORKSPACE suffix, the previously-configured toolchain would be used.
-load("@local//:autoconfigure.bzl", "autoconfigure")
+load("@sample_java_config//:autoconfigure.bzl", "autoconfigure")
 
 autoconfigure(
     name = "local_sample_java",

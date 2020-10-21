@@ -12,13 +12,15 @@ There are several directories, as well at the actual use case samples.
    -  `rules.bzl`: The actual rule implementation. Just prints out what
       toolchain was selected.
    -  `toolchain.bzl`: The toolchain provider and a rule to generate it.
--  `local`: A repository which handles locally-installed toolchains.
+-  `sample_java_configure`: A repository which handles toolchain configuration.
    -  `autoconfigure.bzl`: Automatically configures a toolchain based on
       detecting locally installed programs.
+   -  `local.bzl`: Configures a specific locally-installed toolchain.
+   -  `remote.bzl`: Configures a remotely-downloaded toolchain.
 
 ## Use Case 1: No Configuration, No Local JDK
 
-The WORKSPACE includes `@local//:autoconfigure.bzl`, but this could as easily
+The WORKSPACE includes `@sample_java_configure//:autoconfigure.bzl`, but this could as easily
 have been installed in the WORKSPACE suffix by Bazel.
 
 The autoconfigure repo rule does not find a local install, and doesn't add
@@ -41,7 +43,7 @@ Ideally we would have a more useful and specific error message. See FR at https:
 
 ## Use Case 2: No Configuration, Local JDK Installed
 
-The WORKSPACE includes `@local//:autoconfigure.bzl`, but this could as easily
+The WORKSPACE includes `@sample_java_configure//:autoconfigure.bzl`, but this could as easily
 have been installed in the WORKSPACE suffix by Bazel.
 
 ```
@@ -53,7 +55,7 @@ INFO: Analyzed target //:main (12 packages loaded, 27 targets configured).
 
 ## Use Case 3: Configure Specific Local JDK
 
-The WORKSPACE includes `@local//:configure.bzl`, and specifies a specific
+The WORKSPACE includes `@sample_java_configure//:local.bzl`, and specifies a specific
 locally-installed path to use.
 
 ```
@@ -65,7 +67,7 @@ INFO: Analyzed target //:main (4 packages loaded, 8 targets configured).
 
 ## Use Case 4: Configure Specific Remote JDK
 
-The WORKSPACE includes `@local//:remote.bzl`, and configures several remote
+The WORKSPACE includes `@sample_java_configure//:remote.bzl`, and configures several remote
 toolchains, using toolchain selection and platform definitions (from the BUILD
 file) to choose between them.
 

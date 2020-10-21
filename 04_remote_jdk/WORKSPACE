@@ -6,11 +6,11 @@ local_repository(
 )
 
 local_repository(
-    name = "local",
-    path = "../local",
+    name = "sample_java_config",
+    path = "../sample_java_config",
 )
 
-load("@local//:remote.bzl", "remote")
+load("@sample_java_config//:remote.bzl", "remote")
 
 # Added as project-specific configuration.
 remote(
@@ -40,7 +40,7 @@ remote(
 )
 
 # Even with this in the WORKSPACE suffix, the previously-configured toolchain would be used.
-load("@local//:autoconfigure.bzl", "autoconfigure")
+load("@sample_java_config//:autoconfigure.bzl", "autoconfigure")
 
 autoconfigure(
     name = "local_sample_java",

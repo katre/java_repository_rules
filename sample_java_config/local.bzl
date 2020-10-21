@@ -1,4 +1,4 @@
-def _configure_impl(repo_ctx):
+def _local_impl(repo_ctx):
     # Create a new repository:
     path = repo_ctx.attr.path
     id = path.replace("/", "-")
@@ -7,23 +7,23 @@ def _configure_impl(repo_ctx):
         content = """
 load('@sample_java_rules//:toolchain.bzl', 'sample_java_toolchain')
 sample_java_toolchain(
-    name = 'configure',
+    name = 'local',
     id = 'local%s',
 )
 
 load('@local_config_platform//:constraints.bzl', 'HOST_CONSTRAINTS')
 toolchain(
-    name = 'configure_toolchain',
+    name = 'local_toolchain',
     toolchain_type = '@sample_java_rules//:toolchain_type',
-    toolchain = ':configure',
+    toolchain = ':local',
     exec_compatible_with = HOST_CONSTRAINTS,
     target_compatible_with = HOST_CONSTRAINTS,
 )
 """ % (id),
     )
 
-_configure = repository_rule(
-    implementation = _configure_impl,
+_local = repository_rule(
+    implementation = _local_impl,
     attrs = {
         "path": attr.string(mandatory = True),
     },
@@ -31,9 +31,9 @@ _configure = repository_rule(
     configure = True,
 )
 
-def configure(name, **args):
+def local(name, **args):
     # Create the actual repo.
-    _configure(name = name, **args)
+    _local(name = name, **args)
 
     # Register the toolchains.
     native.register_toolchains("@%s//:all" % name)
